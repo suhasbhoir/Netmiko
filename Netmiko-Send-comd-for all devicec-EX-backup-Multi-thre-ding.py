@@ -1,4 +1,7 @@
 from netmiko import ConnectHandler
+from netmiko.ssh_exception import NetMikoTimeoutException
+from paramiko.ssh_exception import SSHException
+from netmiko.ssh_exception import AuthenticationException
 from datetime import datetime
 import time
 import threading  # Now enabling ihe multi-threading
@@ -16,14 +19,11 @@ def backup(devices):
     connections.enable()
 
     print('\nshowing the running configuration...\n')
-    cmds = '''sho run
-              sho ip route
-              show route-map
-              show ip protocols
-              '''
-    output = connections.send_command(cmds.splitlines('\n'))
-    print(output)
-
+    cmd = '''show run
+             show ip route
+             show ip protocol
+             '''
+    command_send = connections.send_command(cmd)
 
     prompt = connections.find_prompt()
     # print(prompt)
@@ -39,13 +39,12 @@ def backup(devices):
 
     filename = f'{hostname}-{year}-{month}-{day}-{hour}-{minute}-backup.txt'
     with open(filename, 'w') as backup:
-        backup.write(output)
+        backup.write(command_send)
         print(f'Backup of {hostname} completed successfully')
         print('#' * 50)
 
     print('\nclosing the connection')
     connections.disconnect()
-
 
 with open('mydevices.txt') as f:
     mydevices1 = f.read().splitlines()
@@ -62,18 +61,33 @@ for ip in mydevices1:
                      'secret': 'cisco',
                      'verbose': True
                       }
+
 # backup(cisco_devices)
     #creating thread here
-    th = threading.Thread(target=backup, args=(cisco_devices, ) )
-    threads1.append(th)
+    try:
+        th = threading.Thread(target=backup, args=(cisco_devices, ))
+        threads1.append(th)
+    except (AuthenticationException):
+        print('Authentication failure: ' + ip)
+        continue
+    except(NetMikoTimeoutException):
+        print('Timeout to device: ' + ip)
+        continue
+    except(EOFError):
+        print("End of file while attempting device " + ip)
+        continue
+    except(SSHException):
+        print('SSH Issue. Are you sure SSH is enabled? ' + ip)
+        continue
+    except Exception as unknown_error:
+        print('Some other error: ' + str(unknown_error))
+        continue
 
 for th in threads1:
     th.start()
 
 for th in threads1:
     th.join()
-
-
 
 end = time.time()
 print(f'Total time took to execution this script is: {end - start}')
