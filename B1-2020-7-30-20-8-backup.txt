@@ -1,0 +1,308 @@
+Building configuration...
+
+Current configuration : 2326 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname B1
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$6F8K$jAmHppdT3277TfbnqgSak0
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip domain name gns3.lab
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 admin
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+! 
+!
+!
+!
+!
+interface Loopback1
+ ip address 1.1.1.1 255.255.255.255
+!
+interface Loopback11
+ ip address 11.11.11.11 255.255.255.255
+!
+interface Loopback100
+ ip address 100.100.100.100 255.255.255.255
+!
+interface Loopback101
+ ip address 101.101.101.101 255.255.255.255
+!
+interface Loopback110
+ ip address 110.110.110.110 255.255.255.255
+!
+interface Loopback111
+ ip address 111.111.111.111 255.255.255.255
+!
+interface Loopback190
+ ip address 190.1.1.1 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 172.16.1.2 255.255.255.252
+ speed 100
+ full-duplex
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet3/0
+ description *****MNGMT*****
+ ip address 123.123.1.11 255.255.255.0
+ duplex auto
+ speed auto
+!
+router bgp 1000
+ no synchronization
+ bgp log-neighbor-changes
+ network 1.1.1.1 mask 255.255.255.255
+ network 11.11.11.11 mask 255.255.255.255
+ network 100.100.100.100 mask 255.255.255.255
+ network 101.101.101.101 mask 255.255.255.255
+ network 110.110.110.110 mask 255.255.255.255
+ network 111.111.111.111 mask 255.255.255.255
+ network 172.16.1.0 mask 255.255.255.252
+ network 190.1.1.1 mask 255.255.255.255
+ neighbor 172.16.1.1 remote-as 2000
+ neighbor 172.16.1.1 default-originate
+ default-information originate
+ no auto-summary
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 3
+ login local
+line vty 4
+ login local
+ transport input ssh
+!
+!
+end
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     153.153.0.0/32 is subnetted, 1 subnets
+B       153.153.153.153 [20/158720] via 172.16.1.1, 01:39:36
+     202.202.202.0/32 is subnetted, 1 subnets
+B       202.202.202.202 [20/2562816] via 172.16.1.1, 01:41:39
+     196.196.196.0/32 is subnetted, 1 subnets
+B       196.196.196.196 [20/30720] via 172.16.1.1, 01:42:20
+     197.197.197.0/32 is subnetted, 1 subnets
+B       197.197.197.197 [20/30720] via 172.16.1.1, 01:42:20
+     198.198.198.0/32 is subnetted, 1 subnets
+B       198.198.198.198 [20/30720] via 172.16.1.1, 01:42:20
+     199.199.199.0/32 is subnetted, 1 subnets
+B       199.199.199.199 [20/30720] via 172.16.1.1, 01:42:20
+     192.192.192.0/32 is subnetted, 1 subnets
+B       192.192.192.192 [20/30720] via 172.16.1.1, 01:42:20
+     193.193.193.0/32 is subnetted, 1 subnets
+B       193.193.193.193 [20/30720] via 172.16.1.1, 01:42:20
+     194.194.194.0/32 is subnetted, 1 subnets
+B       194.194.194.194 [20/30720] via 172.16.1.1, 01:42:20
+     195.195.195.0/32 is subnetted, 1 subnets
+B       195.195.195.195 [20/30720] via 172.16.1.1, 01:42:20
+     220.220.220.0/32 is subnetted, 1 subnets
+B       220.220.220.220 [20/2562816] via 172.16.1.1, 01:41:39
+     222.222.222.0/32 is subnetted, 1 subnets
+B       222.222.222.222 [20/2562816] via 172.16.1.1, 01:41:39
+     1.0.0.0/32 is subnetted, 1 subnets
+C       1.1.1.1 is directly connected, Loopback1
+     186.186.0.0/32 is subnetted, 1 subnets
+B       186.186.186.186 [20/30720] via 172.16.1.1, 01:41:39
+     171.171.0.0/32 is subnetted, 1 subnets
+B       171.171.171.171 [20/30720] via 172.16.1.1, 01:41:39
+     152.152.0.0/32 is subnetted, 1 subnets
+B       152.152.152.152 [20/158720] via 172.16.1.1, 01:41:39
+     2.0.0.0/32 is subnetted, 1 subnets
+B       2.2.2.2 [20/2562816] via 172.16.1.1, 01:41:39
+     185.185.0.0/32 is subnetted, 1 subnets
+B       185.185.185.185 [20/30720] via 172.16.1.1, 01:41:39
+     168.168.0.0/32 is subnetted, 1 subnets
+B       168.168.168.168 [20/158720] via 172.16.1.1, 01:00:41
+     155.155.0.0/32 is subnetted, 1 subnets
+B       155.155.155.155 [20/158720] via 172.16.1.1, 01:39:36
+     100.0.0.0/32 is subnetted, 1 subnets
+C       100.100.100.100 is directly connected, Loopback100
+     184.184.0.0/32 is subnetted, 1 subnets
+B       184.184.184.184 [20/30720] via 172.16.1.1, 01:41:39
+     169.169.0.0/32 is subnetted, 1 subnets
+B       169.169.169.169 [20/158720] via 172.16.1.1, 01:00:41
+     154.154.0.0/32 is subnetted, 1 subnets
+B       154.154.154.154 [20/158720] via 172.16.1.1, 01:39:36
+     101.0.0.0/32 is subnetted, 1 subnets
+C       101.101.101.101 is directly connected, Loopback101
+     191.191.0.0/32 is subnetted, 1 subnets
+B       191.191.191.191 [20/30720] via 172.16.1.1, 01:42:20
+     174.174.0.0/32 is subnetted, 1 subnets
+B       174.174.174.174 [20/30720] via 172.16.1.1, 01:41:39
+     157.157.0.0/32 is subnetted, 1 subnets
+B       157.157.157.157 [20/158720] via 172.16.1.1, 01:39:36
+     192.168.230.0/30 is subnetted, 1 subnets
+B       192.168.230.0 [20/30720] via 172.16.1.1, 01:42:20
+     175.175.0.0/32 is subnetted, 1 subnets
+B       175.175.175.175 [20/30720] via 172.16.1.1, 01:41:39
+     156.156.0.0/32 is subnetted, 1 subnets
+B       156.156.156.156 [20/158720] via 172.16.1.1, 01:39:36
+     190.1.0.0/16 is variably subnetted, 5 subnets, 2 masks
+B       190.1.1.4/32 [20/156160] via 172.16.1.1, 01:41:39
+B       190.1.1.2/32 [20/2562816] via 172.16.1.1, 01:41:39
+B       190.1.1.3/32 [20/0] via 172.16.1.1, 02:03:52
+C       190.1.1.1/32 is directly connected, Loopback190
+B       190.1.0.0/16 [20/30720] via 172.16.1.1, 01:42:20
+     189.189.0.0/32 is subnetted, 1 subnets
+B       189.189.189.189 [20/30720] via 172.16.1.1, 01:41:39
+     172.172.0.0/32 is subnetted, 1 subnets
+B       172.172.172.172 [20/30720] via 172.16.1.1, 01:41:39
+     159.159.0.0/32 is subnetted, 1 subnets
+B       159.159.159.159 [20/158720] via 172.16.1.1, 01:39:36
+     172.16.0.0/30 is subnetted, 2 subnets
+C       172.16.1.0 is directly connected, FastEthernet0/0
+B       172.16.2.0 [20/2562816] via 172.16.1.1, 01:41:39
+     22.0.0.0/32 is subnetted, 1 subnets
+B       22.22.22.22 [20/2562816] via 172.16.1.1, 01:41:39
+     188.188.0.0/32 is subnetted, 1 subnets
+B       188.188.188.188 [20/30720] via 172.16.1.1, 01:41:39
+     173.173.0.0/32 is subnetted, 1 subnets
+B       173.173.173.173 [20/30720] via 172.16.1.1, 01:41:39
+     158.158.0.0/32 is subnetted, 1 subnets
+B       158.158.158.158 [20/158720] via 172.16.1.1, 01:39:36
+     192.168.200.0/30 is subnetted, 1 subnets
+B       192.168.200.0 [20/30720] via 172.16.1.1, 01:42:20
+     179.179.0.0/32 is subnetted, 1 subnets
+B       179.179.179.179 [20/30720] via 172.16.1.1, 01:41:39
+     162.162.0.0/32 is subnetted, 1 subnets
+B       162.162.162.162 [20/158720] via 172.16.1.1, 01:41:39
+     110.0.0.0/32 is subnetted, 1 subnets
+C       110.110.110.110 is directly connected, Loopback110
+     178.178.0.0/32 is subnetted, 1 subnets
+B       178.178.178.178 [20/30720] via 172.16.1.1, 01:41:39
+     163.163.0.0/32 is subnetted, 1 subnets
+B       163.163.163.163 [20/158720] via 172.16.1.1, 01:00:41
+     111.0.0.0/32 is subnetted, 1 subnets
+C       111.111.111.111 is directly connected, Loopback111
+     177.177.0.0/32 is subnetted, 1 subnets
+B       177.177.177.177 [20/30720] via 172.16.1.1, 01:41:39
+     192.188.188.0/30 is subnetted, 1 subnets
+B       192.188.188.0 [20/30720] via 172.16.1.1, 01:42:20
+     11.0.0.0/32 is subnetted, 1 subnets
+C       11.11.11.11 is directly connected, Loopback11
+     176.176.0.0/32 is subnetted, 1 subnets
+B       176.176.176.176 [20/30720] via 172.16.1.1, 01:41:39
+     161.161.0.0/32 is subnetted, 1 subnets
+B       161.161.161.161 [20/158720] via 172.16.1.1, 01:41:39
+     123.0.0.0/24 is subnetted, 1 subnets
+C       123.123.1.0 is directly connected, FastEthernet3/0
+     183.183.0.0/32 is subnetted, 1 subnets
+B       183.183.183.183 [20/30720] via 172.16.1.1, 01:41:39
+     166.166.0.0/32 is subnetted, 1 subnets
+B       166.166.166.166 [20/158720] via 172.16.1.1, 01:00:41
+B    192.168.1.0/24 [20/0] via 172.16.1.1, 02:03:52
+     182.182.0.0/32 is subnetted, 1 subnets
+B       182.182.182.182 [20/30720] via 172.16.1.1, 01:41:39
+     167.167.0.0/32 is subnetted, 1 subnets
+B       167.167.167.167 [20/158720] via 172.16.1.1, 01:00:41
+     181.181.0.0/32 is subnetted, 1 subnets
+B       181.181.181.181 [20/30720] via 172.16.1.1, 01:41:39
+     164.164.0.0/32 is subnetted, 1 subnets
+B       164.164.164.164 [20/158720] via 172.16.1.1, 01:00:41
+     151.151.0.0/32 is subnetted, 1 subnets
+B       151.151.151.151 [20/158720] via 172.16.1.1, 01:41:39
+     180.180.0.0/32 is subnetted, 1 subnets
+B       180.180.180.180 [20/30720] via 172.16.1.1, 01:41:39
+     165.165.0.0/32 is subnetted, 1 subnets
+B       165.165.165.165 [20/158720] via 172.16.1.1, 01:00:41Routing Protocol is "bgp 1000"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  IGP synchronization is disabled
+  Automatic route summarization is disabled
+  Neighbor(s):
+    Address          FiltIn FiltOut DistIn DistOut Weight RouteMap
+    172.16.1.1                                           
+  Maximum path: 1
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    172.16.1.1            20      01:00:43
+  Distance: external 20 internal 200 local 200

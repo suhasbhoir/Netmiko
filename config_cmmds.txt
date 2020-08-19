@@ -1,0 +1,3 @@
+sho run
+show ip route
+show route-map

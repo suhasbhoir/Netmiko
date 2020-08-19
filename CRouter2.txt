@@ -1,0 +1,25 @@
+router ospf 1
+router-id 2.2.2.2
+network 2.2.2.2 0.0.0.0 area 0
+network 20.20.20.20 0.0.0.0 area 0
+network 10.10.10.0 0.0.0.3 area 0
+network 20.20.20.0 0.0.0.3 area 0
+default-information originate
+exit
+interface loopback 2
+ip address 2.2.2.2 255.255.255.255
+exit
+interface loopback 20
+ip address 20.20.20.20 255.255.255.255
+exit
+interface fa0/0
+ip add 10.10.10.2 255.255.255.252
+no sh
+exit
+interface fa1/0
+ip add 20.20.20.1 255.255.255.252
+no sh
+exit
+access-list 1 permit any
+access-list 2 permit any
+access-list 101 permit ip any any
