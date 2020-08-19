@@ -1,5 +1,7 @@
 from netmiko import ConnectHandler
-from datetime import datetime
+from netmiko.ssh_exception import NetMikoTimeoutException
+from paramiko.ssh_exception import SSHException
+from netmiko.ssh_exception import AuthenticationException
 import time
 import threading  # Now enabling ihe multi-threading
 '''
@@ -41,8 +43,24 @@ for ip in mydevices1:
                       }
 
     #creating thread here
-    th = threading.Thread(target=configsend, args=(cisco_devices, ) )
-    threads1.append(th)
+    try:
+        th = threading.Thread(target=configsend, args=(cisco_devices, ) )
+        threads1.append(th)
+    except (AuthenticationException):
+        print('Authentication failure: ' + ip)
+        continue
+    except(NetMikoTimeoutException):
+        print('Timeout to device: ' + ip)
+        continue
+    except(EOFError):
+        print("End of file while attempting device " + ip)
+        continue
+    except(SSHException):
+        print('SSH Issue. Are you sure SSH is enabled? ' + ip)
+        continue
+    except Exception as unknown_error:
+        print('Some other error: ' + str(unknown_error))
+        continue
 
 for th in threads1:
     th.start()
