@@ -64,24 +64,8 @@ for ip in mydevices1:
 
 # backup(cisco_devices)
     #creating thread here
-    try:
-        th = threading.Thread(target=backup, args=(cisco_devices, ))
-        threads1.append(th)
-    except (AuthenticationException):
-        print('Authentication failure: ' + ip)
-        continue
-    except(NetMikoTimeoutException):
-        print('Timeout to device: ' + ip)
-        continue
-    except(EOFError):
-        print("End of file while attempting device " + ip)
-        continue
-    except(SSHException):
-        print('SSH Issue. Are you sure SSH is enabled? ' + ip)
-        continue
-    except Exception as unknown_error:
-        print('Some other error: ' + str(unknown_error))
-        continue
+    th = threading.Thread(target=backup, args=(cisco_devices, ) )
+    threads1.append(th)
 
 for th in threads1:
     th.start()
@@ -90,4 +74,6 @@ for th in threads1:
     th.join()
 
 end = time.time()
+date = datetime.now()
 print(f'Total time took to execution this script is: {end - start}')
+print(date)
