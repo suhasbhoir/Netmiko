@@ -19,11 +19,11 @@ def backup(devices):
     connections.enable()
 
     print('\nshowing the running configuration...\n')
-    cmd = '''show run
-             show ip route
-             show ip protocol
-             '''
-    command_send = connections.send_command(cmd)
+    # cmd = '''show run
+    #          show ip route
+    #          show ip protocol
+    #          '''
+    command_send = connections.send_command('show run')
 
     prompt = connections.find_prompt()
     # print(prompt)
@@ -64,7 +64,7 @@ for ip in mydevices1:
 
 # backup(cisco_devices)
     #creating thread here
-    th = threading.Thread(target=backup, args=(cisco_devices, ) )
+    th = threading.Thread(target=backup, args=(cisco_devices, ))
     threads1.append(th)
 
 for th in threads1:

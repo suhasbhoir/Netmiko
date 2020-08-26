@@ -1,8 +1,6 @@
 Building configuration...
 
-Current configuration : 5048 bytes
-!
-! Last configuration change at 14:31:19 UTC Tue Aug 25 2020 by admin
+Current configuration : 4919 bytes
 !
 version 15.2
 service timestamps debug datetime msec
@@ -41,7 +39,6 @@ file prompt quiet
 !
 username admin password 0 admin
 username suhas privilege 15 password 0 cisco123
-username netmiko2 secret 5 $1$ZMzL$6duOc2WCx7Wj5ErCf3.bL/
 !
 !
 ip tcp synwait-time 5
